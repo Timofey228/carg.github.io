@@ -1,0 +1,94 @@
+<?php session_start(); ?>
+...
+<input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Грузоперевозки по РФ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>CarGo</h1>
+        <p>Оставьте заявку – мы перезвоним и рассчитаем стоимость</p>
+    </header>
+
+    <main>
+        <section class="form-section">
+            <form action="send.php" method="post" id="cargo-form">
+                <!-- Защита от CSRF (добавим позже в PHP) -->
+                <input type="hidden" name="csrf_token" value="">
+
+                <!-- Поля формы -->
+                <div class="form-group">
+                    <label for="name">Ваше имя *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Телефон *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="from">Откуда (город) *</label>
+                        <input type="text" id="from" name="from_city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="to">Куда (город) *</label>
+                        <input type="text" id="to" name="to_city" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="weight">Вес (кг)</label>
+                        <input type="number" id="weight" name="weight" step="0.1" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="volume">Объём (м³)</label>
+                        <input type="number" id="volume" name="volume" step="0.1" min="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cargo_type">Тип груза</label>
+                    <select id="cargo_type" name="cargo_type">
+                        <option value="">— выберите —</option>
+                        <option value="сборный">Сборный</option>
+                        <option value="негабарит">Негабарит</option>
+                        <option value="опасный">Опасный</option>
+                        <option value="скоропорт">Скоропортящийся</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Дополнительные пожелания</label>
+                    <textarea id="message" name="message" rows="4"></textarea>
+                </div>
+
+                <!-- Honeypot поле (ловушка для спам-ботов) -->
+                <div class="honeypot" style="display:none;">
+                    <label>Не заполняйте это поле</label>
+                    <input type="text" name="website" autocomplete="off">
+                </div>
+
+                <button type="submit">Отправить заявку</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 CarGo | Контакты: +7 (XXX) XXX-XX-XX</p>
+    </footer>
+</body>
+</html>
